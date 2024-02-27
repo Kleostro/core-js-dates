@@ -194,8 +194,22 @@ function getWeekNumberByDate(date) {
  * Date(2024, 0, 13) => Date(2024, 8, 13)
  * Date(2023, 1, 1) => Date(2023, 9, 13)
  */
-function getNextFridayThe13th(/* date */) {
-  throw new Error('Not implemented');
+function getNextFridayThe13th(date) {
+  let UTCMonth = date.getUTCMonth();
+  let UTCFullYear = date.getUTCFullYear();
+  let nextFridayThe13th = new Date(Date.UTC(UTCFullYear, UTCMonth, 13));
+
+  while (nextFridayThe13th.getDay() !== 5) {
+    UTCMonth += 1;
+    if (UTCMonth > 11) {
+      UTCMonth = 0;
+      UTCFullYear += 1;
+    }
+    nextFridayThe13th = new Date(Date.UTC(UTCFullYear, UTCMonth, 13));
+  }
+  return new Date(
+    nextFridayThe13th.getTime() + nextFridayThe13th.getTimezoneOffset() * 60000
+  );
 }
 
 /**
@@ -209,8 +223,8 @@ function getNextFridayThe13th(/* date */) {
  * Date(2024, 5, 1) => 2
  * Date(2024, 10, 10) => 4
  */
-function getQuarter(/* date */) {
-  throw new Error('Not implemented');
+function getQuarter(date) {
+  return Math.ceil((date.getMonth() + 1) / 3);
 }
 
 /**
